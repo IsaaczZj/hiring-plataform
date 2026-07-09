@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/candidate")
+    @RequestMapping("/candidate")
 @Validated
 public class CandidateController {
 
     @PostMapping
-    public void create(@Valid @RequestBody CreateCandidateRequestDTO body) {
-        System.out.println(body);
+    public ResponseEntity create(@Valid @RequestBody CreateCandidateRequestDTO body) {
+        return ResponseEntity.ok(body);
     }
 }
