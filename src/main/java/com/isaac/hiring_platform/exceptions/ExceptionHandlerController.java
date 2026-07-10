@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,12 @@ public class ExceptionHandlerController {
             dto.add(error);
         });
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity<ErrorMessageDTO> handleResponseEntityException(ResponseStatusException e) {
+        ErrorMessageDTO error = new ErrorMessageDTO(e.getReason(), null);
+        return ResponseEntity.status(e.getStatusCode()).body(error);
     }
 
 }

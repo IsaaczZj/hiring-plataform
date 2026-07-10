@@ -3,6 +3,7 @@ package com.isaac.hiring_platform.domain.canditate;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -18,9 +19,13 @@ public class CandidateEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     private String name;
+    @Column(unique = true, nullable = false)
     private String username;
+    @Column(unique = true, nullable = false)
     private String email;
     private String password;
     private String description;
     private String curriculum;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }
