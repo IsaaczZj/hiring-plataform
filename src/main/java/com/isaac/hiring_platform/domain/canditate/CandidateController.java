@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Validated
 public class CandidateController {
-    private final CandidateService candidateService;
+    private final CreateCandidateUseCase createCandidateUseCase;
 
     @PostMapping
     public ResponseEntity<CandidateResponseDTO> create(@Valid @RequestBody CreateCandidateRequestDTO body) {
-        var candidateResponseDTO = candidateService.create(body);
+        var candidateResponseDTO = createCandidateUseCase.execute(body);
         return ResponseEntity.ok(candidateResponseDTO);
     }
 }
