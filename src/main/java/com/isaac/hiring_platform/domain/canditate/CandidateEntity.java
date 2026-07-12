@@ -2,6 +2,7 @@ package com.isaac.hiring_platform.domain.canditate;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -26,6 +27,8 @@ public class CandidateEntity {
     private String password;
     private String description;
     private String curriculum;
+
+    @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 }

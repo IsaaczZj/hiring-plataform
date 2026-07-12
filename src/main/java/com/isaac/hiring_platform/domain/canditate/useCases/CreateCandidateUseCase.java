@@ -33,7 +33,6 @@ public class CreateCandidateUseCase {
                         .email(newCandidate.email())
                         .password(newCandidate.password())
                         .description(newCandidate.description())
-                        .createdAt(LocalDateTime.now())
                         .build());
 
         return CandidateResponseDTO.fromEntity(candidate);
