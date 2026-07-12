@@ -2,6 +2,7 @@ package com.isaac.hiring_platform.domain.canditate;
 
 import com.isaac.hiring_platform.domain.canditate.dtos.CandidateResponseDTO;
 import com.isaac.hiring_platform.domain.canditate.dtos.CreateCandidateRequestDTO;
+import com.isaac.hiring_platform.domain.canditate.useCases.CreateCandidateUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Validated
 public class CandidateController {
-    private final CandidateService candidateService;
+    private final CreateCandidateUseCase createCandidateUseCase;
 
     @PostMapping
     public ResponseEntity<CandidateResponseDTO> create(@Valid @RequestBody CreateCandidateRequestDTO body) {
-        var candidateResponseDTO = candidateService.create(body);
+        var candidateResponseDTO = createCandidateUseCase.execute(body);
         return ResponseEntity.ok(candidateResponseDTO);
     }
 }
