@@ -1,4 +1,4 @@
-package com.isaac.hiring_platform.domain.canditate;
+package com.isaac.hiring_platform.domain.candidate;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

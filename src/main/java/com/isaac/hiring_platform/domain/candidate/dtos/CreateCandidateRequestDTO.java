@@ -1,4 +1,4 @@
-package com.isaac.hiring_platform.domain.canditate.dtos;
+package com.isaac.hiring_platform.domain.candidate.dtos;
 
 import jakarta.validation.constraints.*;
 

@@ -1,15 +1,14 @@
-package com.isaac.hiring_platform.domain.canditate.useCases;
+package com.isaac.hiring_platform.domain.candidate.useCases;
 
-import com.isaac.hiring_platform.domain.canditate.CandidateEntity;
-import com.isaac.hiring_platform.domain.canditate.CandidateRepository;
-import com.isaac.hiring_platform.domain.canditate.dtos.CandidateResponseDTO;
-import com.isaac.hiring_platform.domain.canditate.dtos.CreateCandidateRequestDTO;
+import com.isaac.hiring_platform.domain.candidate.CandidateEntity;
+import com.isaac.hiring_platform.domain.candidate.CandidateRepository;
+import com.isaac.hiring_platform.domain.candidate.dtos.CandidateResponseDTO;
+import com.isaac.hiring_platform.domain.candidate.dtos.CreateCandidateRequestDTO;
+import com.isaac.hiring_platform.exceptions.CandidateAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-
-import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -19,10 +18,10 @@ public class CreateCandidateUseCase {
 
     public CandidateResponseDTO execute(CreateCandidateRequestDTO newCandidate) {
         if (candidateRepository.existsByUsername(newCandidate.username())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Esse username já está em uso");
+            throw new CandidateAlreadyExistsException("Esse username já está em uso");
         }
         if (candidateRepository.existsByEmail(newCandidate.email())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Esse e-mail já está em uso");
+            throw new CandidateAlreadyExistsException("Esse e-mail já está em uso");
         }
 
         CandidateEntity candidate = candidateRepository

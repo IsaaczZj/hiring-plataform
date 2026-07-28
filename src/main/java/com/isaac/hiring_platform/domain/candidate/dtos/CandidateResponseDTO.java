@@ -1,6 +1,6 @@
-package com.isaac.hiring_platform.domain.canditate.dtos;
+package com.isaac.hiring_platform.domain.candidate.dtos;
 
-import com.isaac.hiring_platform.domain.canditate.CandidateEntity;
+import com.isaac.hiring_platform.domain.candidate.CandidateEntity;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
