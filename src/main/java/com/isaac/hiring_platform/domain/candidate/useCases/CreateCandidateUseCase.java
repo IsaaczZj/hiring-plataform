@@ -4,11 +4,9 @@ import com.isaac.hiring_platform.domain.candidate.CandidateEntity;
 import com.isaac.hiring_platform.domain.candidate.CandidateRepository;
 import com.isaac.hiring_platform.domain.candidate.dtos.CandidateResponseDTO;
 import com.isaac.hiring_platform.domain.candidate.dtos.CreateCandidateRequestDTO;
-import com.isaac.hiring_platform.exceptions.CandidateAlreadyExistsException;
+import com.isaac.hiring_platform.exceptions.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -18,10 +16,10 @@ public class CreateCandidateUseCase {
 
     public CandidateResponseDTO execute(CreateCandidateRequestDTO newCandidate) {
         if (candidateRepository.existsByUsername(newCandidate.username())) {
-            throw new CandidateAlreadyExistsException("Esse username já está em uso");
+            throw new ResourceAlreadyExistsException("Esse username já está em uso");
         }
         if (candidateRepository.existsByEmail(newCandidate.email())) {
-            throw new CandidateAlreadyExistsException("Esse e-mail já está em uso");
+            throw new ResourceAlreadyExistsException("Esse e-mail já está em uso");
         }
 
         CandidateEntity candidate = candidateRepository

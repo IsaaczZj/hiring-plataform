@@ -38,11 +38,10 @@ public class ExceptionHandlerController {
         return ResponseEntity.status(e.getStatusCode()).body(error);
     }
 
-    @ExceptionHandler(CandidateAlreadyExistsException.class)
-    public ResponseEntity<ErrorMessageDTO> handleCandidateAlreadyExists(CandidateAlreadyExistsException e){
-        var error = new ErrorMessageDTO(e.getMessage(),null);
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ErrorMessageDTO> handleResourceAlreadyExists(ResourceAlreadyExistsException e) {
+        var error = new ErrorMessageDTO(e.getMessage(), null);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
-
     }
 
 }

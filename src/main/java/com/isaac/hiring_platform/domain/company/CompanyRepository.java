@@ -6,6 +6,6 @@ import java.util.UUID;
 
 public interface CompanyRepository extends JpaRepository<CompanyEntity, UUID> {
 
-    boolean existsByName(String name);
     boolean existsByEmail(String email);
+    boolean existsBySlug(String slug);
 }

@@ -33,6 +33,8 @@ public class CompanyEntity {
     private String websiteUrl;
     @Column(nullable = false, unique = true, length = 14)
     private String cnpj;
+
+    @Column(length = 7000)
     private String description;
 
     @CreationTimestamp
