@@ -8,4 +8,5 @@ public interface CompanyRepository extends JpaRepository<CompanyEntity, UUID> {
 
     boolean existsByEmail(String email);
     boolean existsBySlug(String slug);
+    boolean existsByCnpj(String cnpj);
 }

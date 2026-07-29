@@ -24,6 +24,10 @@ public class CreateCompanyUseCase {
             throw new ResourceAlreadyExistsException("Já existe uma empresa com esse e-mail");
         }
 
+        if (companyRepository.existsByCnpj(newCompany.cnpj())) {
+            throw new ResourceAlreadyExistsException("Já existe uma empresa com esse cnpj");
+        }
+
         String slug = generateUniqueSlug(newCompany.name());
 
         CompanyEntity company = CompanyEntity.builder()
