@@ -1,5 +1,6 @@
 package com.isaac.hiring_platform.domain.company;
 
+import com.isaac.hiring_platform.domain.company.dtos.CompanyResponseDTO;
 import com.isaac.hiring_platform.domain.company.dtos.CreateCompanyRequestDTO;
 import com.isaac.hiring_platform.domain.company.useCases.CreateCompanyUseCase;
 import jakarta.validation.Valid;
@@ -22,8 +23,8 @@ public class CompanyController {
     private final CreateCompanyUseCase createCompanyUseCase;
 
     @PostMapping
-    public ResponseEntity<Object> create(@Valid @RequestBody CreateCompanyRequestDTO newCompany) {
-        createCompanyUseCase.execute(newCompany);
-        return ResponseEntity.ok().body(Map.of("message", "Empresa criada com sucesso"));
+    public ResponseEntity<CompanyResponseDTO> create(@Valid @RequestBody CreateCompanyRequestDTO newCompany) {
+        var createdCompany = createCompanyUseCase.execute(newCompany);
+        return ResponseEntity.ok(createdCompany);
     }
 }

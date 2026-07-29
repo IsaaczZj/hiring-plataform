@@ -2,6 +2,7 @@ package com.isaac.hiring_platform.domain.company.useCases;
 
 import com.isaac.hiring_platform.domain.company.CompanyEntity;
 import com.isaac.hiring_platform.domain.company.CompanyRepository;
+import com.isaac.hiring_platform.domain.company.dtos.CompanyResponseDTO;
 import com.isaac.hiring_platform.domain.company.dtos.CreateCompanyRequestDTO;
 import com.isaac.hiring_platform.exceptions.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class CreateCompanyUseCase {
 
     private final CompanyRepository companyRepository;
 
-    public void execute(CreateCompanyRequestDTO newCompany) {
+    public CompanyResponseDTO execute(CreateCompanyRequestDTO newCompany) {
         if (companyRepository.existsByEmail(newCompany.email())) {
             throw new ResourceAlreadyExistsException("Já existe uma empresa com esse e-mail");
         }
@@ -36,6 +37,7 @@ public class CreateCompanyUseCase {
                 .build();
 
         companyRepository.save(company);
+        return CompanyResponseDTO.fromEntity(company);
     }
 
     private String generateUniqueSlug(String name) {
