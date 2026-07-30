@@ -21,11 +21,11 @@ public class CreateCompanyUseCase {
 
     public CompanyResponseDTO execute(CreateCompanyRequestDTO newCompany) {
         if (companyRepository.existsByEmail(newCompany.email())) {
-            throw new ResourceAlreadyExistsException("Já existe uma empresa com esse e-mail");
+            throw new ResourceAlreadyExistsException("Já existe uma empresa com esse e-mail", "email");
         }
 
         if (companyRepository.existsByCnpj(newCompany.cnpj())) {
-            throw new ResourceAlreadyExistsException("Já existe uma empresa com esse cnpj");
+            throw new ResourceAlreadyExistsException("Já existe uma empresa com esse cnpj", "cnpj");
         }
 
         String slug = generateUniqueSlug(newCompany.name());

@@ -16,10 +16,10 @@ public class CreateCandidateUseCase {
 
     public CandidateResponseDTO execute(CreateCandidateRequestDTO newCandidate) {
         if (candidateRepository.existsByUsername(newCandidate.username())) {
-            throw new ResourceAlreadyExistsException("Esse username já está em uso");
+            throw new ResourceAlreadyExistsException("Esse username já está em uso", "username");
         }
         if (candidateRepository.existsByEmail(newCandidate.email())) {
-            throw new ResourceAlreadyExistsException("Esse e-mail já está em uso");
+            throw new ResourceAlreadyExistsException("Esse e-mail já está em uso", "email");
         }
 
         CandidateEntity candidate = candidateRepository

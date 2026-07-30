@@ -40,7 +40,7 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<ErrorMessageDTO> handleResourceAlreadyExists(ResourceAlreadyExistsException e) {
-        var error = new ErrorMessageDTO(e.getMessage(), null);
+        var error = new ErrorMessageDTO(e.getMessage(), e.getField());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
