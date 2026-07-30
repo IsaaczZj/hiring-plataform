@@ -1,5 +1,6 @@
 package com.isaac.hiring_platform.exceptions;
 
+import jakarta.validation.ConstraintViolationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -45,8 +46,20 @@ public class ExceptionHandlerController {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ErrorMessageDTO> handleNotFound(NotFoundException e){
+    public ResponseEntity<ErrorMessageDTO> handleNotFound(NotFoundException e) {
         var error = new ErrorMessageDTO(e.getMessage());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<List<ErrorMessageDTO>> handleConstraintViolation(
+            ConstraintViolationException exception
+    ) {
+        List<ErrorMessageDTO> errors = exception.getConstraintViolations()
+                .stream()
+                .map(violation -> new ErrorMessageDTO(violation.getMessage()))
+                .toList();
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
 }
