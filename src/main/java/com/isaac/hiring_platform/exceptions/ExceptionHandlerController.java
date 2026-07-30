@@ -26,7 +26,7 @@ public class ExceptionHandlerController {
         List<ErrorMessageDTO> dto = new ArrayList<>();
         e.getBindingResult().getFieldErrors().forEach(err -> {
             String message = messageSource.getMessage(err, LocaleContextHolder.getLocale());
-            ErrorMessageDTO error = new ErrorMessageDTO(message, err.getField());
+            ErrorMessageDTO error = new ErrorMessageDTO(message);
             dto.add(error);
         });
         return new ResponseEntity<>(dto, HttpStatus.BAD_REQUEST);
@@ -34,14 +34,19 @@ public class ExceptionHandlerController {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<ErrorMessageDTO> handleResponseEntityException(ResponseStatusException e) {
-        ErrorMessageDTO error = new ErrorMessageDTO(e.getReason(), null);
+        ErrorMessageDTO error = new ErrorMessageDTO(e.getReason());
         return ResponseEntity.status(e.getStatusCode()).body(error);
     }
 
     @ExceptionHandler(ResourceAlreadyExistsException.class)
     public ResponseEntity<ErrorMessageDTO> handleResourceAlreadyExists(ResourceAlreadyExistsException e) {
-        var error = new ErrorMessageDTO(e.getMessage(), e.getField());
+        var error = new ErrorMessageDTO(e.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorMessageDTO> handleNotFound(NotFoundException e){
+        var error = new ErrorMessageDTO(e.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
 }
