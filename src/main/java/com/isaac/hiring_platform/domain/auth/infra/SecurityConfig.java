@@ -30,10 +30,10 @@ public class SecurityConfig {
                         ex -> ex.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
                         ).accessDeniedHandler(((request, response, accessDeniedException) -> response.setStatus(HttpStatus.FORBIDDEN.value()))))
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers(HttpMethod.POST, apiBaseUrl + "/candidate").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, apiBaseUrl + "/company").permitAll();
-                    auth.requestMatchers(HttpMethod.POST, apiBaseUrl + "/auth/**").permitAll();
-                    auth.anyRequest().authenticated();
+                    auth.requestMatchers(HttpMethod.POST, apiBaseUrl + "/candidate").permitAll()
+                            .requestMatchers(HttpMethod.POST, apiBaseUrl + "/company").permitAll()
+                            .requestMatchers(HttpMethod.POST, apiBaseUrl + "/auth/**").permitAll()
+                            .anyRequest().authenticated();
                 })
                 .build();
 
