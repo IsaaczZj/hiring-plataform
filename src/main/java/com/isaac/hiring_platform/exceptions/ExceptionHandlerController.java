@@ -62,4 +62,14 @@ public class ExceptionHandlerController {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
     }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<ErrorMessageDTO> handleInvalidCredentials(
+            InvalidCredentialsException exception
+    ) {
+        var error = new ErrorMessageDTO(exception.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(error);
+    }
 }
