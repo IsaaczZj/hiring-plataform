@@ -6,6 +6,7 @@ import com.isaac.hiring_platform.domain.company.dtos.CompanyResponseDTO;
 import com.isaac.hiring_platform.domain.company.dtos.CreateCompanyRequestDTO;
 import com.isaac.hiring_platform.exceptions.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.Normalizer;
@@ -18,6 +19,7 @@ public class CreateCompanyUseCase {
     private static final int MAX_SLUG_LENGTH = 120;
 
     private final CompanyRepository companyRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public CompanyResponseDTO execute(CreateCompanyRequestDTO newCompany) {
         if (companyRepository.existsByEmail(newCompany.email())) {
@@ -29,12 +31,12 @@ public class CreateCompanyUseCase {
         }
 
         String slug = generateUniqueSlug(newCompany.name());
-
+        var password = passwordEncoder.encode(newCompany.password());
         CompanyEntity company = CompanyEntity.builder()
                 .name(newCompany.name())
                 .slug(slug)
                 .email(newCompany.email())
-                .password(newCompany.password())
+                .password(password)
                 .websiteUrl(newCompany.websiteUrl())
                 .cnpj(newCompany.cnpj())
                 .description(newCompany.description())
