@@ -6,6 +6,7 @@ import com.isaac.hiring_platform.domain.candidate.dtos.CandidateResponseDTO;
 import com.isaac.hiring_platform.domain.candidate.dtos.CreateCandidateRequestDTO;
 import com.isaac.hiring_platform.exceptions.ResourceAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class CreateCandidateUseCase {
 
     private final CandidateRepository candidateRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public CandidateResponseDTO execute(CreateCandidateRequestDTO newCandidate) {
         if (candidateRepository.existsByUsername(newCandidate.username())) {
@@ -21,6 +23,7 @@ public class CreateCandidateUseCase {
         if (candidateRepository.existsByEmail(newCandidate.email())) {
             throw new ResourceAlreadyExistsException("Esse e-mail já está em uso", "email");
         }
+        var password = passwordEncoder.encode(newCandidate.password());
 
         CandidateEntity candidate = candidateRepository
                 .save(CandidateEntity
@@ -28,7 +31,7 @@ public class CreateCandidateUseCase {
                         .username(newCandidate.username())
                         .name(newCandidate.name())
                         .email(newCandidate.email())
-                        .password(newCandidate.password())
+                        .password(password)
                         .description(newCandidate.description())
                         .build());
 
