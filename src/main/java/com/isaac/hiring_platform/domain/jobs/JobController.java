@@ -4,6 +4,7 @@ import com.isaac.hiring_platform.domain.jobs.dtos.CreateJobRequestDTO;
 import com.isaac.hiring_platform.domain.jobs.dtos.JobResponseDTO;
 import com.isaac.hiring_platform.domain.jobs.useCases.CreateJobUseCase;
 import com.isaac.hiring_platform.domain.jobs.useCases.ListJobUseCase;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -16,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("${api.base.path}/job")
@@ -30,9 +32,10 @@ public class JobController {
             @RequestParam(defaultValue = "0") @Min(0) int page,
 
             @RequestParam(defaultValue = "10")
-            @Min(value = 1, message = "O número mínimo de itens é 1") @Max(value = 50, message = "O número de itens deve ser menor que 50 por pagina")
+            @Min(value = 1, message = "O número mínimo de itens é 1")
+            @Max(value = 50, message = "O número de itens deve ser menor que 50 por pagina")
             int perPage,
-            
+
             @RequestParam(defaultValue = "createdAt") String sortBy,
             @RequestParam(defaultValue = "desc") String sortDir
 
@@ -44,8 +47,11 @@ public class JobController {
     }
 
     @PostMapping
-    public ResponseEntity<JobResponseDTO> create(@Valid @RequestBody CreateJobRequestDTO newJob) {
-        var job = createJobUseCase.execute(newJob);
+    public ResponseEntity<JobResponseDTO> create(@Valid @RequestBody CreateJobRequestDTO newJob, HttpServletRequest request) {
+
+        var companyId = UUID.fromString(request.getAttribute("company_id").toString());
+
+        var job = createJobUseCase.execute(newJob, companyId);
         return ResponseEntity.ok(job);
     }
 }

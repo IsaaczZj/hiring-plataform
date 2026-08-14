@@ -10,6 +10,8 @@ import com.isaac.hiring_platform.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class CreateJobUseCase {
@@ -17,8 +19,8 @@ public class CreateJobUseCase {
     private final JobRepository jobRepository;
     private final CompanyRepository companyRepository;
 
-    public JobResponseDTO execute(CreateJobRequestDTO newJob) {
-        CompanyEntity company = companyRepository.findById(newJob.companyId())
+    public JobResponseDTO execute(CreateJobRequestDTO newJob, UUID company_id) {
+        CompanyEntity company = companyRepository.findById(company_id)
                 .orElseThrow(() -> new NotFoundException("Coloque um id de uma empresa existente")
                 );
 

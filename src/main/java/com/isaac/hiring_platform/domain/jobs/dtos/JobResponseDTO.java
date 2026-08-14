@@ -12,7 +12,6 @@ public record JobResponseDTO(
         String description,
         String benefits,
         JobLevel level,
-        UUID companyId,
         String companyName,
         LocalDateTime createdAt
 ) {
@@ -24,7 +23,6 @@ public record JobResponseDTO(
                 job.getDescription(),
                 job.getBenefits(),
                 job.getLevel(),
-                job.getCompany().getId(),
                 job.getCompany().getName(),
                 job.getCreatedAt()
         );

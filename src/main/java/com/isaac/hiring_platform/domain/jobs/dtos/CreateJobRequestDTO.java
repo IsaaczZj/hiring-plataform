@@ -1,4 +1,5 @@
 package com.isaac.hiring_platform.domain.jobs.dtos;
+
 import com.isaac.hiring_platform.domain.jobs.JobLevel;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,10 +18,7 @@ public record CreateJobRequestDTO(
         String benefits,
 
         @NotNull(message = "O nível da vaga é obrigatório")
-        JobLevel level,
-
-        @NotNull(message = "O ID da empresa é obrigatório")
-        UUID companyId
+        JobLevel level
 ) {
 
 }

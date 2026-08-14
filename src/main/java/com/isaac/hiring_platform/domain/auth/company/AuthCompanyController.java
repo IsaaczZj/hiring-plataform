@@ -1,15 +1,17 @@
 package com.isaac.hiring_platform.domain.auth.company;
 
-import com.isaac.hiring_platform.domain.auth.company.dtos.AuthCompanyLoginRequestDTO;
-import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
+import com.isaac.hiring_platform.domain.auth.company.dtos.AuthCompanyLoginRequestDTO;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("${api.base.path}/auth/company")
