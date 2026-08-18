@@ -25,6 +25,7 @@ public class SecurityConfig {
     String apiBaseUrl;
 
     private final SecurityFilter securityFilter;
+    private final SecurityCandidateFilter securityCandidateFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) {
@@ -41,6 +42,7 @@ public class SecurityConfig {
 
                 })
                 .addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class)
                 .build();
 
     }

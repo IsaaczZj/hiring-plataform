@@ -40,13 +40,13 @@ public class AuthCandidateUseCase {
         }
 
         Algorithm algorithm = Algorithm.HMAC256(jtwSecretCandidate);
+        var expiresIn = Instant.now().plus(Duration.ofMinutes(15));
         var token = JWT.create()
                 .withIssuer("hiring-plataform")
                 .withSubject(candidate.getId().toString())
                 .withClaim("roles", List.of("candidate"))
-                .withExpiresAt(Instant.now().plus(Duration.ofMinutes(15)))
                 .sign(algorithm);
+        return AuthCandidateLoginResponseDTO.builder().access_token(token).expiresIn(expiresIn.toEpochMilli()).build();
 
-        return AuthCandidateLoginResponseDTO.builder().access_token(token).build();
     }
 }

@@ -6,10 +6,6 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record AuthCandidateLoginRequestDTO(
-        @NotBlank(message = "Digite um username")
-        @Size(min = 2, message = "O username precisa ter no mínimo 2 caracteres")
-        @Pattern(regexp = "^\\S+$", message = "O username não pode conter espaços")
-        String username,
 
         @NotBlank(message = "Digite um e-mail")
         @Email(message = "Digite um e-mail válido")
